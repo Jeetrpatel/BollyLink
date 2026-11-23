@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e3">
+<title>Bollywood Link — Daily Movie Connection Puzzle</title>
+<meta name="description" content="Connect two Bollywood movies through shared actors, directors, writers and producers. A new puzzle every day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= top navigation ================= -->
+<header class="nav">
+  <a class="logo" href="#" aria-label="Bollywood Link">
+    <span class="logo-a">
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm2 2v3h3V5H6zm5 0v3h3V5h-3zm5 0v3h3V5h-3zM6 10v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3zM6 15v4h3v-4H6zm5 0v4h3v-4h-3zm5 0v4h3v-4h-3z"/></svg>
+      BOLLYWOOD
+    </span>
+    <span class="logo-b">LINK</span>
+  </a>
+
+  <nav class="nav-menu">
+    <div class="nav-drop">
+      <button class="nav-item" id="playBtn" aria-haspopup="true">Play <i class="caret">▾</i></button>
+      <div class="nav-menu-pop hidden" id="playMenu">
+        <button class="pop-item" data-game="random">
+          <b>🎲 Random game</b><span>random start film + random target</span>
+        </button>
+        <button class="pop-item" data-game="pick">
+          <b>🎬 Pick a starter</b><span>you choose the start — we give a random target</span>
+        </button>
+        <div class="pop-sep"></div>
+        <button class="pop-item" data-game="daily">
+          <b>📅 Today's puzzle</b><span id="menuDailySub">daily challenge</span>
+        </button>
+      </div>
+    </div>
+    <button class="nav-item soon" data-soon="Multiplayer">Multiplayer</button>
+    <button class="nav-item soon" data-soon="Leagues">Leagues</button>
+    <button class="nav-item soon" data-soon="Leaderboard">Leaderboard</button>
+    <button class="nav-item soon updates" data-soon="Updates">Updates<i class="ndot"></i></button>
+  </nav>
+
+  <div class="nav-right">
+    <button class="nav-icon soon" data-soon="Discord" aria-label="Discord" title="Discord">
+      <svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.2.4c1.4.4 2.6 1 3.7 1.7a13.6 13.6 0 0 0-11.4 0c1.1-.7 2.4-1.3 3.7-1.7L10.8 4a16.6 16.6 0 0 0-4.1 1.3C3.9 9.4 3.2 13.4 3.5 17.3a16.7 16.7 0 0 0 5 2.5l.6-1a10.8 10.8 0 0 1-1.8-.9l.4-.3a11.8 11.8 0 0 0 9.9 0l.4.3c-.6.4-1.2.7-1.8.9l.6 1a16.7 16.7 0 0 0 5-2.5c.4-4.5-.6-8.5-2.5-12zM9.3 14.9c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+    </button>
+    <button class="nav-icon" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="ic-sun" viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5v3m0 14v3M4.2 4.2l2.1 2.1m11.4 11.4 2.1 2.1M2 12h3m14 0h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6 8.6 8.6 0 1 0 20.4 14.6z"/></svg>
+    </button>
+    <button class="btn-out soon" data-soon="Sign in">SIGN IN</button>
+    <button class="btn-solid soon" data-soon="Sign up">SIGN UP</button>
+  </div>
+</header>
+
+<!-- ================= game bar ================= -->
+<div class="gamebar">
+  <span class="gb-mode hidden" id="modeChip">🎲 RANDOM</span>
+  <button class="gb-pill start" id="startPill" title="Your starting film">
+    <span class="gb-tag">START</span><span class="gb-name" id="startTitle">—</span>
+  </button>
+  <span class="gb-arrow" aria-hidden="true">➜</span>
+  <button class="gb-pill target" id="targetPill" title="Search for a film or artist">
+    <span class="gb-tag">TARGET</span><span class="gb-name" id="targetTitle">—</span>
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+  </button>
+
+  <div class="gb-right">
+    <span class="gb-pill meta" title="Links used / par">
+      <span class="gb-tag">LINKS</span><b id="hops">0</b><span class="gb-par" id="parInfo"> / 4</span>
+    </span>
+    <span class="gb-pill meta" title="Elapsed time">
+      <span class="gb-tag">TIME</span><b id="timer">0:00.0</b>
+    </span>
+    <button class="gb-icon" id="undoBtn" title="Undo last step">↩</button>
+    <button class="gb-icon" id="restartBtn" title="Restart">⟲</button>
+    <button class="gb-icon" id="hintBtn" title="Reveal one valid step">💡</button>
+    <button class="gb-giveup" id="giveupBtn">Give Up <span>›</span></button>
+  </div>
+</div>
+
+<!-- ================= layout ================= -->
+<div class="shell">
+  <aside class="sidebar">
+    <div class="side-label"><i></i>YOUR CHAIN</div>
+    <ol class="timeline" id="chainList"></ol>
+  </aside>
+
+  <main class="main">
+    <div id="hero"></div>
+    <div id="below"></div>
+    <footer>
+      <button class="foot-link" id="howtoBtn">How to play</button> ·
+      Data: <a href="https://www.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a> CC BY-SA ·
+      <span id="statsLine">—</span> · <span id="puzzleNo">—</span>
+    </footer>
+  </main>
+</div>
+
+<!-- ================= search overlay ================= -->
+<div class="overlay hidden" id="searchOverlay">
+  <div class="ov-card" role="dialog" aria-label="Search">
+    <div class="ov-head">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        <input id="search" type="text" placeholder="Search a film or an artist…" autocomplete="off" spellcheck="false">
+        <button class="clear-btn hidden" id="clearFilter" aria-label="Clear">✕</button>
+      </div>
+      <button class="ov-x" id="ovClose" aria-label="Close search">✕</button>
+    </div>
+    <div class="results" id="results"></div>
+  </div>
+</div>
+
+<!-- toast / confetti -->
+<div class="toast" id="toast" role="status"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- ================= how to play ================= -->
+<div class="modal-backdrop hidden" id="howtoModal">
+  <div class="modal" role="dialog" aria-labelledby="howtoTitle">
+    <button class="modal-x" data-close>✕</button>
+    <h2 id="howtoTitle">How to play</h2>
+    <ol class="rules">
+      <li>You start on a <b>🎬 film</b> and must reach the <b>🎯 target film</b> (use the <b>🔍</b> on the target pill to search).</li>
+      <li>Pick your game with <b>Play ▾</b> — 🎲 <b>Random game</b> (random start &amp; target) or 🎬 <b>Pick a starter</b> (choose your start, we give a random target).</li>
+      <li><b>Film selected?</b> — its <b>CAST</b> appears below, plus director/writer/producer/music pills in the card. Tap any artist to travel through them.</li>
+      <li><b>Artist selected?</b> — <b>their movies</b> appear below. Tap one to jump there; the chain grows <b>film → artist → film</b>.</li>
+      <li>Connect in as <b>few links</b> as you can — par is the shortest path (BFS on the film–artist graph).</li>
+      <li>One new puzzle every day, same for everyone. Timer starts when you arrive. ⏱️</li>
+    </ol>
+    <button class="btn-gold wide" data-close>Got it — start playing</button>
+  </div>
+</div>
+
+<!-- ================= win ================= -->
+<div class="modal-backdrop hidden" id="winModal">
+  <div class="modal win-modal" role="dialog" aria-labelledby="winTitle">
+    <div class="win-emoji">🎉</div>
+    <h2 id="winTitle">Connected!</h2>
+    <div class="win-path" id="winPath"></div>
+    <div class="win-stats">
+      <div class="stat"><span class="stat-val" id="winLinks">—</span><span class="stat-label">links</span></div>
+      <div class="stat"><span class="stat-val" id="winPar">—</span><span class="stat-label">par</span></div>
+      <div class="stat"><span class="stat-val" id="winTime">—</span><span class="stat-label">time</span></div>
+      <div class="stat"><span class="stat-val" id="winBest">—</span><span class="stat-label">best</span></div>
+    </div>
+    <div class="win-badge" id="winBadge"></div>
+    <div class="win-actions">
+      <button class="btn-gold wide" id="shareBtn">📋 Copy result</button>
+      <div class="countdown muted" id="countdown"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= solution ================= -->
+<div class="modal-backdrop hidden" id="solutionModal">
+  <div class="modal" role="dialog" aria-labelledby="solTitle">
+    <button class="modal-x" data-close>✕</button>
+    <h2 id="solTitle">Shortest path</h2>
+    <p class="muted" id="solSub">Here's the optimal connection:</p>
+    <div class="win-path" id="solPath"></div>
+    <button class="btn-out wide" data-close>Back to puzzle</button>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
